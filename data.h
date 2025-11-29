@@ -1,23 +1,33 @@
-#ifndef data_h
-#define data_h
+#ifndef DATA_H
+#define DATA_H
 #include <string>
 using namespace std;
+int pilihan;
 
- int pilihan;
+// Struktur data user/petugas
+struct Data {
+    string username;
+    string password;
+    string nama;
+    string alamat;
+    string no_telp;
+};
 
+// Node tree general (multi-child)
 class Node {
 public:
-    std::string data;     
-    Node* firstChild;     
-    Node* nextSibling;    
+    Data data;            // menyimpan data lengkap user/petugas
+    Node* firstChild;     // anak pertama
+    Node* nextSibling;    // saudara berikutnya
 
-    Node(std::string value) {
+    Node(Data value) {
         data = value;
         firstChild = nullptr;
         nextSibling = nullptr;
     }
 };
 
+// Struktur Tree
 class Tree {
 public:
     Node* root;
@@ -26,11 +36,13 @@ public:
         root = nullptr;
     }
 
-    void createRoot(std::string value) {
+    // Membuat root tree (misalnya: "Data Pegawai dan User")
+    void createRoot(Data value) {
         root = new Node(value);
     }
 
-    Node* addChild(Node* parent, std::string value) {
+    // Menambah anak ke parent (bisa petugas atau user)
+    Node* addChild(Node* parent, Data value) {
         Node* newNode = new Node(value);
 
         if (parent->firstChild == nullptr) {
@@ -42,28 +54,13 @@ public:
             }
             temp->nextSibling = newNode;
         }
+
         return newNode;
     }
-};
-class createNode{
-public:
-    string data;
-    createNode* firstChild;
-    createNode* nextSibling;
 
-    createNode(string value) {
-        data = value;
-        firstChild = nullptr;
-        nextSibling = nullptr;
-    }
-};
-
-class deteleNode{
-public:
-    void deleteTree(createNode* node) {
-        if (node == nullptr) {
-            return;
-        }
+    // Rekursif hapus seluruh tree
+    void deleteTree(Node* node) {
+        if (node == nullptr) return;
 
         deleteTree(node->firstChild);
         deleteTree(node->nextSibling);
@@ -71,8 +68,5 @@ public:
         delete node;
     }
 };
-
-
-
 
 #endif

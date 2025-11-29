@@ -37,4 +37,18 @@ void menuPengguna(){
     cin >> pilihan;
 
 }
+void menuManagemetSampah(){
+    cout << "==========================" << endl;
+    cout << "   MENU MANAGEMET SAMPAH " << endl;
+    cout << "==========================" << endl;
+    cout << "1. daftar ketegori " << endl;
+    cout << "2. management titik pengumpulan " << endl;
+    cout << "3. harga sampah " << endl;
+    cout << "4. aturan pemilahan" << endl;
+    cout << "5. kembali " << endl;
+    cout << "==========================" << endl;
+    cout << "Pilih menu: ";
+    cin >> pilihan;
+
+}
 
