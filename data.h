@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+ int pilihan;
+
 class Node {
 public:
     std::string data;     
@@ -41,6 +43,32 @@ public:
             temp->nextSibling = newNode;
         }
         return newNode;
+    }
+};
+class createNode{
+public:
+    string data;
+    createNode* firstChild;
+    createNode* nextSibling;
+
+    createNode(string value) {
+        data = value;
+        firstChild = nullptr;
+        nextSibling = nullptr;
+    }
+};
+
+class deteleNode{
+public:
+    void deleteTree(createNode* node) {
+        if (node == nullptr) {
+            return;
+        }
+
+        deleteTree(node->firstChild);
+        deleteTree(node->nextSibling);
+
+        delete node;
     }
 };
 
