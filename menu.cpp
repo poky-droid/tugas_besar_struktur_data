@@ -11,7 +11,7 @@ void menuLogin(){
     cout << "Pilih menu: ";
 }
 
-int menuDasboard(){
+void menuDasboard(){
     cout << "==========================" << endl;
     cout << "     MENU DASHBOARD      " << endl;
     cout << "==========================" << endl;
@@ -22,6 +22,18 @@ int menuDasboard(){
     cout << "==========================" << endl;
     cout << "Pilih menu: ";
     cin >> pilihan;
-    return pilihan;
 
+}
+
+void menuPengguna(){
+    cout << "==========================" << endl;
+    cout << "      MENU PENGGUNA      " << endl;
+    cout << "==========================" << endl;
+    cout << "1. user " << endl;
+    cout << "2. petugas" << endl;
+    cout << "4. kembali " << endl;
+    cout << "==========================" << endl;
+    cout << "Pilih menu: ";
+    cin >> pilihan;
+    
 }
