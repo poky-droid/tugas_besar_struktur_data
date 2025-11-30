@@ -26,3 +26,37 @@ void readData(Node* node, int space = 0){
     readData(node -> firstChild, space + 2);
     readData(node -> nextSibling, space);
 }
+
+//delete
+bool deleteData(Tree &t, Node* parent, string username) {
+    if (parent == nullptr) return false;
+
+    Node* child = parent->firstChild;
+
+    if (child != nullptr && child->data.username == username) {
+        parent->firstChild = child->nextSibling;
+        delete child;
+        return true;
+    }
+
+    Node* prev = child;
+    if (child != nullptr) child = child->nextSibling;
+
+    while (child != nullptr) {
+        if (child->data.username == username) {
+            prev->nextSibling = child->nextSibling;
+            delete child;
+            return true;
+        }
+        prev = child;
+        child = child->nextSibling;
+    }
+
+    child = parent->firstChild;
+    while (child != nullptr) {
+        if (deleteData(t, child, username)) return true;
+        child = child->nextSibling;
+    }
+
+    return false;
+}
