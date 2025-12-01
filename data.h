@@ -11,6 +11,7 @@ struct Data {
     string nama;
     string alamat;
     string no_telp;
+    string role;
 };
 
 // Node tree general (multi-child)

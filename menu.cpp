@@ -1,7 +1,7 @@
 #include "data.h"
 #include <iostream>
 using namespace std;
-void menuLogin(){
+int menuLogin(){
     cout << "==========================" << endl;
     cout << "      MENU LOGIN         " << endl;
     cout << "==========================" << endl;
@@ -50,5 +50,14 @@ void menuManagemetSampah(){
     cout << "Pilih menu: ";
     cin >> pilihan;
 
+}
+
+bool roleCheck(Data d, string requiredRole) {
+    if (d.role == requiredRole) {
+        return true;
+    } else {
+        cout << "Akses ditolak. Anda tidak memiliki izin untuk mengakses menu ini." << endl;
+        return false;
+    }
 }
 
