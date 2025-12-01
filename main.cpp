@@ -6,10 +6,8 @@ using namespace std;
 
 int main() {
     Data d;          
-    
-    int menulogin(d);   
-    // Cek role dari user
     if (d.role == "admin") {
+        
     } 
     else if (d.role == "petugas") {
     } 
