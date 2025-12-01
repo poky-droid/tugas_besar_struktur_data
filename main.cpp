@@ -5,17 +5,8 @@
 using namespace std;
 
 int main() {
-    Data d;          
-    if (d.role == "admin") {
-        
-    } 
-    else if (d.role == "petugas") {
-    } 
-    else if (d.role == "user") {
-    } 
-    else {
-        cout << "Role tidak dikenali." << endl;
-    }
+    void login();
+    
 
     return 0;
 }

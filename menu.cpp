@@ -9,6 +9,18 @@ int menuLogin(){
     cout << "2. register " << endl;
     cout << "==========================" << endl;
     cout << "Pilih menu: ";
+    switch (pilihan)
+    {
+    case 1:
+        login();
+        break;
+    case 2:
+        registerUser();
+        break;
+    
+    default:
+        break;
+    }
 }
 
 void menuDasboard(){
@@ -52,14 +64,56 @@ void menuManagemetSampah(){
 
 }
 
-// bool roleCheck(Data d, string requiredRole) {
-//     if (d.role == requiredRole) {
-//         return true;
-//     } else {
-//         cout << "Akses ditolak. Anda tidak memiliki izin untuk mengakses menu ini." << endl;
-//         return false;
-//     }
-// }
+void login(){
+    DataUser d;
+    cout << "==========================" << endl;
+    cout << "        LOGIN            " << endl;
+    cout << "==========================" << endl;
+    cout << "Masukkan username: ";
+    string username;
+    cin >> username;
+    cout << "Masukkan password: ";
+    string password;
+    cin >> password;
+    cout << "==========================" << endl;
+    if (username == d.username && password == d.password){
+        if (d.role == "admin"){
+            menuAdmin();
+        } 
+        else if (d.role == "petugas") {
+            menuPetugas();
+        } 
+        else if (d.role == "user") {
+            // Panggil menu user
+        }
+    } else {
+        cout << "Login gagal. Username atau password salah." << endl;
+    }
+}
+
+
+string registerUser(){
+    DataUser d;
+    cout << "==========================" << endl;
+    cout << "       REGISTER          " << endl;
+    cout << "==========================" << endl;
+    cout << "Masukkan nama: ";
+    cin >> d.nama;
+    cout << "Masukkan alamat: ";
+    cin >> d.alamat;
+    cout << "Masukkan no_telp: ";
+    cin >> d.no_telp;
+    cout << "Masukkan username: ";
+    cin >> d.username;
+    cout << "Masukkan password: ";
+    cin >> d.password;
+    d.role = "user"; // default role user
+    cout << "==========================" << endl;
+    login();
+    return "Registrasi berhasil. Silakan login.";
+
+}
+
 
 void menuAdmin(){
     cout << "==========================" << endl;
@@ -89,6 +143,33 @@ void menuAdmin(){
             cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
             break;
     }
+}
+
+void menuPetugas(){
+    cout << "==========================" << endl;
+    cout << "      MENU PETUGAS       " << endl;
+    cout << "==========================" << endl;
+    cout << "1. Kelola Sampah " << endl;
+    cout << "2. Laporan Transaksi " << endl;
+    cout << "3. Keluar " << endl;
+    cout << "==========================" << endl;
+    cout << "Pilih menu: ";
+    cin >> pilihan;
+
+
+
+}
+
+void menuUser(){
+    cout << "==========================" << endl;
+    cout << "       MENU USER         " << endl;
+    cout << "==========================" << endl;
+    cout << "1. Setor Sampah " << endl;
+    cout << "2. Lihat Saldo " << endl;
+    cout << "3. Keluar " << endl;
+    cout << "==========================" << endl;
+    cout << "Pilih menu: ";
+    cin >> pilihan; 
 }
 
 

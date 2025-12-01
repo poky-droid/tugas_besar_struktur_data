@@ -5,7 +5,7 @@ using namespace std;
 int pilihan;
 
 // Struktur data user/petugas
-struct Data {
+struct DataUser {
     string username;
     string password;
     string nama;
@@ -14,14 +14,48 @@ struct Data {
     string role;
 };
 
+struct nodeDataUser
+{
+    DataUser data;
+    nodeDataUser* next;
+    nodeDataUser* prev;
+};
+
+struct Sampah {
+    string jenisSampah;
+    double berat;       // dalam kilogram
+    double hargaPerKg;  // dalam rupiah
+};
+
+struct NodedataSampah
+{
+    Sampah data;
+    NodedataSampah* next;
+    NodedataSampah* prev;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Node tree general (multi-child)
 class Node {
 public:
-    Data data;            // menyimpan data lengkap user/petugas
+    DataUser data;            // menyimpan data lengkap user/petugas
     Node* firstChild;     // anak pertama
     Node* nextSibling;    // saudara berikutnya
 
-    Node(Data value) {
+    Node(DataUser value) {
         data = value;
         firstChild = nullptr;
         nextSibling = nullptr;
@@ -38,12 +72,12 @@ public:
     }
 
     // Membuat root tree (misalnya: "Data Pegawai dan User")
-    void createRoot(Data value) {
+    void createRoot(DataUser value) {
         root = new Node(value);
     }
 
     // Menambah anak ke parent (bisa petugas atau user)
-    Node* addChild(Node* parent, Data value) {
+    Node* addChild(Node* parent, DataUser value) {
         Node* newNode = new Node(value);
 
         if (parent->firstChild == nullptr) {
