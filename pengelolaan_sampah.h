@@ -7,7 +7,8 @@ using namespace std;
 typedef struct Sampah {
     string jenisSampah;
     float berat;        // kilogram
-    float hargaPerKg;   // harga per kilogram
+    float hargaPerKg; // harga per kilogram  
+    string kategori; 
 } Sampah;
 
 typedef struct queueNode {
@@ -15,9 +16,20 @@ typedef struct queueNode {
     queueNode* next;
 } queueNode;
 
-// Pointer queue (global)
+typedef struct titikpengumpulan {
+    string RW;
+    string alamat;
+    titikpengumpulan* next;
+}
+
+// Pointer queue (global) 
 extern queueNode* depan;   // front
 extern queueNode* belakang; // rear
+
+
+// pointer head (global atau dilewatkan)
+titikpengumpulan* headRW;
+
 
 // Prototipe fungsi queue
 queueNode* createSampah(Sampah S);
@@ -25,5 +37,11 @@ void enqueueSampah(Sampah S);
 string dequeueSampah();
 void tampilQueueSampah();
 bool isEmpty();
+Sampah inputSampah();
+void tambahRW();
+void tampilRW();
+void hapusRW(string rw);
+void editRW(string rw);
+float getHargaPerKgJenis(string kategori, string jenis);
 
 #endif
