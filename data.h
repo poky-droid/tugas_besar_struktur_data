@@ -18,10 +18,20 @@ struct nodeDataUser
 {
     DataUser data;
     nodeDataUser* next;
-    nodeDataUser* prev;
 };
 
+void printUser(DataUser D);
+DataUser inputUser(DataUser in);       // khusus input petugas
+nodeDataUser* createNode();            // membuat node baru
+nodeDataUser* deleteUser(nodeDataUser* head); // hapus user
+nodeDataUser* editData(nodeDataUser* head);
+
+
+
+//sampah 
+
 struct Sampah {
+    string kategori;
     string jenisSampah;
     double berat;       // dalam kilogram
     double hargaPerKg;  // dalam rupiah
