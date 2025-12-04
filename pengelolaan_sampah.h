@@ -20,7 +20,7 @@ typedef struct titikpengumpulan {
     string RW;
     string alamat;
     titikpengumpulan* next;
-}
+} titikpengumpulan;
 
 // Pointer queue (global) 
 extern queueNode* depan;   // front

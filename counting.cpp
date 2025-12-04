@@ -1,5 +1,6 @@
 #include <iostream>
 #include "data.h"
+#include "pengelolaan_sampah.h"
 using namespace std;
 
 // Hitung total warga (role = user)
@@ -33,9 +34,9 @@ int countTotalPetugas(nodeDataUser* head) {
 
 
 // Hitung volume sampah bulan ini (berat total)
-double countVolumeSampahBulanIni(NodedataSampah* head) {
+double countVolumeSampahBulanIni(queueNode* head) {
     double total = 0;
-    NodedataSampah* temp = head;
+    queueNode* temp = head;
 
     while (temp != nullptr) {
         total += temp->data.berat;
@@ -46,7 +47,7 @@ double countVolumeSampahBulanIni(NodedataSampah* head) {
 
 
 // MENU DASHBOARD
-void dashboard(nodeDataUser* headUser, NodedataSampah* headSampah) {
+void dashboard(nodeDataUser* headUser, queueNode* headSampah) {
     cout << "\n======================================" << endl;
     cout << "           DASHBOARD SISTEM           " << endl;
     cout << "======================================" << endl;
