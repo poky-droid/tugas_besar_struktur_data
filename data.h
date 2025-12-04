@@ -45,6 +45,13 @@ struct NodedataSampah
     NodedataSampah* prev;
 };
 
+//dasboard 
+int countTotalWarga(nodeDataUser* head);
+int countTotalPetugas(nodeDataUser* head);
+double countVolumeSampahBulanIni(NodedataSampah* head);
+
+
+
 
 
 
