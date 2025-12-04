@@ -18,6 +18,7 @@ struct nodeDataUser
 {
     DataUser data;
     nodeDataUser* next;
+    nodeDataUser* prev;
 };
 
 void printUser(DataUser D);

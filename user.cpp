@@ -2,6 +2,14 @@
 #include <iostream>
 using namespace std;
 
+nodeDataUser* createNode() {
+    nodeDataUser* baru = new nodeDataUser;
+    baru->next = nullptr;
+    baru->prev = nullptr;
+    return baru;
+}
+
+
 void printUser(DataUser D) {
     cout << "Username : " << D.username << endl;
     cout << "Password : " << D.password << endl;
@@ -35,14 +43,41 @@ nodeDataUser* deleteUser(nodeDataUser* head) {
         return nullptr;
     }
 
-    nodeDataUser* hapus = head;
-    head = head->next;
+    string key;
+    cout << "Masukkan username yang ingin dihapus: ";
+    cin >> key;
 
-    cout << "User dengan username '" << hapus->data.username << "' telah dihapus." << endl;
+    nodeDataUser* temp = head;
 
-    delete hapus;
+    // cari node
+    while (temp != nullptr && temp->data.username != key) {
+        temp = temp->next;
+    }
+
+    if (temp == nullptr) {
+        cout << "User tidak ditemukan!" << endl;
+        return head;
+    }
+
+    // jika node yang dihapus adalah head
+    if (temp == head) {
+        head = head->next;
+        if (head != nullptr)
+            head->prev = nullptr;
+    } 
+    else {
+        temp->prev->next = temp->next;
+        if (temp->next != nullptr)
+            temp->next->prev = temp->prev;
+    }
+
+    cout << "User '" << temp->data.username << "' berhasil dihapus.\n";
+    delete temp;
+
     return head;
 }
+
+
 
 nodeDataUser* editData(nodeDataUser* head) {
     if (head == nullptr) {
@@ -55,24 +90,19 @@ nodeDataUser* editData(nodeDataUser* head) {
     cin >> key;
 
     nodeDataUser* temp = head;
-    bool ditemukan = false;
 
-    // Cari username
-    while (temp != nullptr) {
-        if (temp->data.username == key) {
-            ditemukan = true;
-            break;
-        }
+    // cari username
+    while (temp != nullptr && temp->data.username != key) {
         temp = temp->next;
     }
 
-    if (!ditemukan) {
-        cout << "Data dengan username '" << key << "' tidak ditemukan." << endl;
+    if (temp == nullptr) {
+        cout << "User tidak ditemukan!" << endl;
         return head;
     }
 
-    // Edit data
-    cout << "=== EDIT DATA USER ===" << endl;
+    cout << "\n=== EDIT DATA USER ===\n";
+
     cout << "Username baru   : ";
     cin >> temp->data.username;
     cout << "Password baru   : ";
@@ -86,7 +116,7 @@ nodeDataUser* editData(nodeDataUser* head) {
     cout << "Role baru       : ";
     cin >> temp->data.role;
 
-    cout << "Data berhasil diperbarui!" << endl;
+    cout << "Data berhasil diperbarui!\n";
 
     return head;
 }
