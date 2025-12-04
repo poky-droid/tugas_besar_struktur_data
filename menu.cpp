@@ -173,5 +173,21 @@ void menuUser(){
 }
 
 
+// ===================== Menu Titik Pengumpulan RW =====================
+// int pilih;
+// cout << "1. Tambah RW\n";
+// cout << "2. Tampil RW\n";
+// cout << "3. Edit RW\n";
+// cout << "4. Hapus RW\n";
+// cout << "Pilih: ";
+// cin >> pilih;
+
+// switch (pilih) {
+//     case 1: tambahRW(); break;
+//     case 2: tampilRW(); break;
+//     case 3: editRW(); break;
+//     case 4: hapusRW(); break;
+// }
+
 
 
