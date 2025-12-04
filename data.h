@@ -1,6 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 #include <string>
+#include "pengelolaan_sampah.h"
 using namespace std;
 int pilihan;
 
@@ -18,8 +19,9 @@ struct nodeDataUser
 {
     DataUser data;
     nodeDataUser* next;
-    
     nodeDataUser* prev;
+    queueNode* front;   // front
+
 };
 
 void printUser(DataUser D);
