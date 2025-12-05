@@ -3,7 +3,7 @@
 #include <string>
 #include "pengelolaan_sampah.h"
 using namespace std;
-int pilihan;
+extern int pilihan;
 
 // Struktur data user/petugas
 struct DataUser {
@@ -20,7 +20,6 @@ struct nodeDataUser
     DataUser data;
     nodeDataUser* next;
     nodeDataUser* prev;
-    queueNode* front;   // front
 
 };
 
@@ -31,6 +30,14 @@ nodeDataUser* deleteUser(nodeDataUser* head); // hapus user
 nodeDataUser* editData(nodeDataUser* head);
 
 
+void login(nodeDataUser* head);
+string registerUser();
+void menuAdmin();
+void menuPetugas();
+void menuDasboard();
+int MenuUtama();
+
+nodeDataUser* findUser(nodeDataUser* head, string username);
 
 
 

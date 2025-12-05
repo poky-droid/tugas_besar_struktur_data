@@ -27,8 +27,8 @@ extern queueNode* depan;   // front
 extern queueNode* belakang; // rear
 
 
-// pointer head (global atau dilewatkan)
-titikpengumpulan* headRW;
+// pointer head (global or passed)
+extern titikpengumpulan* headRW;
 
 
 // Prototipe fungsi queue

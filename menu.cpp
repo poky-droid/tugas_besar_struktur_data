@@ -1,6 +1,62 @@
 #include "data.h"
 #include <iostream>
 using namespace std;
+
+// ...existing code...
+
+void menuUser() {
+    cout << "==========================" << endl;
+    cout << "       MENU USER         " << endl;
+    cout << "==========================" << endl;
+    cout << "1. Setor Sampah " << endl;
+    cout << "2. Lihat Saldo " << endl;
+    cout << "3. Keluar " << endl;
+    cout << "==========================" << endl;
+    cout << "Pilih menu: ";
+    cin >> pilihan;
+}
+
+
+
+// Forward declarations
+void menuUser();
+struct nodeDataUser;
+nodeDataUser* createNode();
+void printUser(DataUser D);
+
+// Global head pointer for user list
+nodeDataUser* headUser = nullptr;
+
+
+int MenuUtama(){
+    do {
+        cout << "==========================" << endl;
+        cout << "      MENU UTAMA         " << endl;
+        cout << "==========================" << endl;
+        cout << "1. Login " << endl;
+        cout << "2. Register " << endl;
+        cout << "3. Keluar " << endl;
+        cout << "==========================" << endl;
+        cout << "Pilih menu: ";
+        cin >> pilihan;
+        switch (pilihan) {
+            case 1:
+                login(headUser);
+                break;
+            case 2:
+                registerUser();
+                break;
+            case 3:
+                cout << "Terima kasih telah menggunakan sistem!" << endl;
+                return 0;
+            default:
+                cout << "Pilihan tidak valid. Coba lagi." << endl;
+        }
+    } while (pilihan != 3);
+    return 0;
+}
+
+
 int menuLogin(){
     cout << "==========================" << endl;
     cout << "      MENU LOGIN         " << endl;
@@ -12,7 +68,7 @@ int menuLogin(){
     switch (pilihan)
     {
     case 1:
-        login();
+       login(headUser);
         break;
     case 2:
         registerUser();
@@ -21,9 +77,11 @@ int menuLogin(){
     default:
         break;
     }
+    return 0;
 }
 
 void menuDasboard(){
+    void dashboard(nodeDataUser* headUser, queueNode* headSampah);
     cout << "==========================" << endl;
     cout << "     MENU DASHBOARD      " << endl;
     cout << "==========================" << endl;
@@ -33,8 +91,7 @@ void menuDasboard(){
     cout << "4. Keluar " << endl;
     cout << "==========================" << endl;
     cout << "Pilih menu: ";
-    cin >> pilihan; 
-
+    cin >> pilihan;
 }
 
 void menuPengguna(){
@@ -47,7 +104,6 @@ void menuPengguna(){
     cout << "==========================" << endl;
     cout << "Pilih menu: ";
     cin >> pilihan;
-
 }
 void menuManagemetSampah(){
     cout << "==========================" << endl;
@@ -64,32 +120,61 @@ void menuManagemetSampah(){
 
 }
 
-void login(){
-    DataUser d;
+nodeDataUser* findUser(nodeDataUser* head, string username) {
+    nodeDataUser* current = head;
+    while (current != NULL) {
+        if (current->data.username == username) {
+            return current; // ketemu
+        }
+        current = current->next;
+    }
+    return NULL; // tidak ditemukan
+}
+
+void login(nodeDataUser* head) {
     cout << "==========================" << endl;
-    cout << "        LOGIN            " << endl;
+    cout << "          LOGIN           " << endl;
     cout << "==========================" << endl;
+
+    string username, password;
+
     cout << "Masukkan username: ";
-    string username;
     cin >> username;
     cout << "Masukkan password: ";
-    string password;
     cin >> password;
     cout << "==========================" << endl;
-    if (username == d.username && password == d.password){
-        if (d.role == "admin"){
-            menuAdmin();
-        } 
-        else if (d.role == "petugas") {
-            menuPetugas();
-        } 
-        else if (d.role == "user") {
-            // Panggil menu user
-        }
-    } else {
-        cout << "Login gagal. Username atau password salah." << endl;
+
+    // cari user di linked list
+    nodeDataUser* userNode = findUser(head, username);
+
+    if (userNode == NULL) {
+        cout << "Login gagal: Username tidak ditemukan." << endl;
+        return;
+    }
+
+    if (password != userNode->data.password) {
+        cout << "Login gagal: Password salah." << endl;
+        return;
+    }
+
+    // Jika lolos username & password
+    cout << "Login berhasil! Selamat datang, " << userNode->data.nama << endl;
+
+    // Cek role
+    if (userNode->data.role == "admin") {
+        menuAdmin();
+    } 
+    else if (userNode->data.role == "petugas") {
+        menuPetugas();
+    } 
+    else if (userNode->data.role == "user") {
+        menuUser();
+    } 
+    else {
+        cout << "Role tidak dikenal." << endl;
     }
 }
+
 
 
 string registerUser(){
@@ -109,7 +194,21 @@ string registerUser(){
     cin >> d.password;
     d.role = "user"; // default role user
     cout << "==========================" << endl;
-    login();
+
+    // Simpan ke linked list
+    nodeDataUser* newNode = createNode();
+    newNode->data = d;
+    newNode->next = nullptr;
+    newNode->prev = nullptr;
+    if (headUser == nullptr) {
+        headUser = newNode;
+    } else {
+        nodeDataUser* temp = headUser;
+        while (temp->next != nullptr) temp = temp->next;
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+    cout << "Registrasi berhasil. Silakan login." << endl;
     return "Registrasi berhasil. Silakan login.";
 
 }
@@ -159,35 +258,6 @@ void menuPetugas(){
 
 
 }
-
-void menuUser(){
-    cout << "==========================" << endl;
-    cout << "       MENU USER         " << endl;
-    cout << "==========================" << endl;
-    cout << "1. Setor Sampah " << endl;
-    cout << "2. Lihat Saldo " << endl;
-    cout << "3. Keluar " << endl;
-    cout << "==========================" << endl;
-    cout << "Pilih menu: ";
-    cin >> pilihan; 
-}
-
-
-// ===================== Menu Titik Pengumpulan RW =====================
-// int pilih;
-// cout << "1. Tambah RW\n";
-// cout << "2. Tampil RW\n";
-// cout << "3. Edit RW\n";
-// cout << "4. Hapus RW\n";
-// cout << "Pilih: ";
-// cin >> pilih;
-
-// switch (pilih) {
-//     case 1: tambahRW(); break;
-//     case 2: tampilRW(); break;
-//     case 3: editRW(); break;
-//     case 4: hapusRW(); break;
-// }
 
 
 

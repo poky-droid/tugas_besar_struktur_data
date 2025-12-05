@@ -3,9 +3,10 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    void login();
-    
+int pilihan;  // Define global variable here
 
+int main() {
+    cout << "Selamat datang di Sistem Pengelolaan Sampah!" << endl;
+    MenuUtama();
     return 0;
 }
