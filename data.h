@@ -40,5 +40,13 @@ int MenuUtama();
 nodeDataUser* findUser(nodeDataUser* head, string username);
 
 
+void menuUser();
+struct nodeDataUser;
+nodeDataUser* createNode();
+void printUser(DataUser D);
+
+extern nodeDataUser* headUser;
+
+
 
 #endif

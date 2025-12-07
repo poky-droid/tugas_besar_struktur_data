@@ -4,6 +4,7 @@
 using namespace std;
 
 int pilihan;  // Define global variable here
+nodeDataUser* headUser = nullptr;  // Define headUser here
 
 int main() {
     cout << "Selamat datang di Sistem Pengelolaan Sampah!" << endl;

@@ -5,7 +5,8 @@ using namespace std;
 // ...existing code...
 
 void menuUser() {
-    cout << "==========================" << endl;
+    do {
+        cout << "==========================" << endl;
     cout << "       MENU USER         " << endl;
     cout << "==========================" << endl;
     cout << "1. Setor Sampah " << endl;
@@ -14,18 +15,29 @@ void menuUser() {
     cout << "==========================" << endl;
     cout << "Pilih menu: ";
     cin >> pilihan;
+    switch (pilihan) {
+        case 1:
+            cout << "Fitur setor sampah belum tersedia." << endl;
+            break;
+        case 2:
+            cout << "Fitur lihat saldo belum tersedia." << endl;
+            break;
+        case 3:
+            cout << "Keluar dari menu user." << endl;
+            break;
+        default:
+            cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
+            break;
+    } // close switch
+
+    } while (pilihan != 3);
+    
 }
 
 
 
-// Forward declarations
-void menuUser();
-struct nodeDataUser;
-nodeDataUser* createNode();
-void printUser(DataUser D);
 
-// Global head pointer for user list
-nodeDataUser* headUser = nullptr;
+
 
 
 int MenuUtama(){
@@ -58,7 +70,8 @@ int MenuUtama(){
 
 
 int menuLogin(){
-    cout << "==========================" << endl;
+    do{
+         cout << "==========================" << endl;
     cout << "      MENU LOGIN         " << endl;
     cout << "==========================" << endl;
     cout << "1. Login " << endl;
@@ -77,8 +90,11 @@ int menuLogin(){
     default:
         break;
     }
+    }while (pilihan !=3);
     return 0;
-}
+ }
+   
+
 
 void menuDasboard(){
     void dashboard(nodeDataUser* headUser, queueNode* headSampah);
