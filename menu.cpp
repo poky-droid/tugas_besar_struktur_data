@@ -271,9 +271,22 @@ void menuPetugas(){
     cout << "Pilih menu: ";
     cin >> pilihan;
 
-
-
+    switch (pilihan) {
+        case 1:
+            kelolaSampah();
+            break;
+        case 2:
+            laporanTransaksi();
+            break;
+        case 3:
+            cout << "Keluar dari menu petugas." << endl;
+            break;
+        default:
+            cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
+            break;
+    }
 }
+
 
 
 
