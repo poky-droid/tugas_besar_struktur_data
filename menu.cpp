@@ -271,9 +271,41 @@ void menuPetugas(){
     cout << "Pilih menu: ";
     cin >> pilihan;
 
-
-
+    switch (pilihan) {
+        case 1:
+            kelolaSampah();
+            break;
+        case 2:
+            laporanTransaksi();
+            break;
+        case 3:
+            cout << "Keluar dari menu petugas." << endl;
+            break;
+        default:
+            cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
+            break;
+    }
 }
 
+void laporanTransaksi() {
+    int pilih;
+
+    do {
+        cout << "\n======== LAPORAN TRANSAKSI ========\n";
+        cout << "1. Tambah Transaksi\n";
+        cout << "2. Lihat Semua Transaksi\n";
+        cout << "3. Kembali\n";
+        cout << "Pilih menu: ";
+        cin >> pilih;
+
+        switch (pilih) {
+            case 1: tambahTransaksi(); break;
+            case 2: lihatTransaksi(); break;
+            case 3: break;
+            default: cout << "Pilihan tidak valid!\n";
+        }
+
+    } while (pilih != 3);
+}
 
 
