@@ -2,7 +2,6 @@
 #define DATA_H
 
 #include <string>
-#include "pengelolaan_sampah.h"
 using namespace std;
 
 // ================================
@@ -55,17 +54,7 @@ void menuManagemetSampah();
 void menuPengguna();
 
 
-// ================================
-// FITUR PETUGAS - SAMPAH
-// ================================
-extern int jumlahSampah;
-extern Sampah dataSampah[20];
 
-void kelolaSampah();
-void tambahSampah();
-void lihatSampah();
-void editSampah();
-void hapusSampah();
 
 
 // ================================
@@ -80,11 +69,86 @@ struct Transaksi {
     int totalHarga;
 };
 
-extern int jumlahTransaksi;
-extern Transaksi dataTransaksi[50];
+// =======================
+// CHILD (Transaksi)
+// =======================
+struct NodeTransaksi {
+    Transaksi data;
+    NodeTransaksi* next;
+};
+
+
+extern NodeTransaksi* headTransaksi;
 
 void laporanTransaksi();
 void tambahTransaksi();
 void lihatTransaksi();
+
+// Pengelolaan Sampah 
+
+typedef struct Sampah {
+    string jenisSampah;
+    float berat;        // kilogram
+    float hargaPerKg; // harga per kilogram  
+    string kategori; 
+} Sampah;
+
+typedef struct queueNode {
+    Sampah data;
+    queueNode* next;
+} queueNode;
+
+typedef struct titikpengumpulan {
+    string RW;
+    string alamat;
+    titikpengumpulan* next;
+} titikpengumpulan;
+
+
+// ================================
+// FITUR PETUGAS - SAMPAH
+// ================================
+
+// =======================
+// PARENT (Sampah)
+// =======================
+struct NodeSampah {
+    Sampah data;
+    NodeSampah* next;
+    NodeTransaksi* firstChild;
+};
+
+extern NodeSampah* headSampah;
+
+
+void kelolaSampah();
+void tambahSampah();
+void lihatSampah();
+void editSampah();
+void hapusSampah();
+
+
+// Pointer queue (global) 
+extern queueNode* depan;   // front
+extern queueNode* belakang; // rear
+
+
+// pointer head (global or passed)
+extern titikpengumpulan* headRW;
+
+
+// Prototipe fungsi queue
+queueNode* createSampah(Sampah S);
+void enqueueSampah(Sampah S);
+string dequeueSampah();
+void tampilQueueSampah();
+bool isEmpty();
+Sampah inputSampah();
+void tambahRW();
+void tampilRW();
+void hapusRW(string rw);
+void editRW(string rw);
+float getHargaPerKgJenis(string kategori, string jenis);
+
 
 #endif

@@ -1,33 +1,32 @@
 #include <iostream>
-#include <string>
 #include "data.h"
-#include "pengelolaan_sampah.h"
 using namespace std;
 
-// =======================================
-//  ARRAY GLOBAL (DEFINISI)
-// =======================================
-int jumlahSampah = 0;
-Sampah dataSampah[20];
 
-int jumlahTransaksi = 0;
-Transaksi dataTransaksi[50];
+// ================================
+// CREATE NODE
+// ================================
+NodeSampah* createNodeSampah(Sampah S) {
+    NodeSampah* n = new NodeSampah;
+    n->data = S;
+    n->next = nullptr;
+    n->firstChild = nullptr;
+    return n;
+}
 
-
-// ====================================================
-//                MENU KELOLA SAMPAH PETUGAS
-// ====================================================
+// ================================
+// KELOLA SAMPAH
+// ================================
 void kelolaSampah() {
     int pilih;
-
     do {
-        cout << "\n======== KELOLA SAMPAH ========\n";
+        cout << "\n==== KELOLA SAMPAH ====\n";
         cout << "1. Tambah Sampah\n";
-        cout << "2. Lihat Data Sampah\n";
-        cout << "3. Edit Data Sampah\n";
-        cout << "4. Hapus Data Sampah\n";
+        cout << "2. Lihat Sampah\n";
+        cout << "3. Edit Sampah\n";
+        cout << "4. Hapus Sampah\n";
         cout << "5. Kembali\n";
-        cout << "Pilih menu: ";
+        cout << "Pilih: ";
         cin >> pilih;
 
         switch (pilih) {
@@ -35,156 +34,170 @@ void kelolaSampah() {
             case 2: lihatSampah(); break;
             case 3: editSampah(); break;
             case 4: hapusSampah(); break;
-            case 5: break;
-            default: cout << "Pilihan tidak valid!\n";
         }
-
     } while (pilih != 5);
 }
 
-
-// ====================================================
-//           TAMBAH SAMPAH (PAKAI inputSampah())
-// ====================================================
+// ================================
+// TAMBAH SAMPAH
+// ================================
 void tambahSampah() {
-    if (jumlahSampah >= 20) {
-        cout << "Data penuh! Tidak bisa menambah sampah baru.\n";
-        return;
-    }
-
-    cout << "\n=== TAMBAH DATA SAMPAH ===\n";
     Sampah S = inputSampah();
+    NodeSampah* baru = createNodeSampah(S);
 
-    dataSampah[jumlahSampah] = S;
-    jumlahSampah++;
-
-    cout << "Data sampah berhasil ditambahkan!\n";
+    if (!headSampah)
+        headSampah = baru;
+    else {
+        NodeSampah* temp = headSampah;
+        while (temp->next) temp = temp->next;
+        temp->next = baru;
+    }
+    cout << "Sampah berhasil ditambahkan!\n";
 }
 
-
-// ====================================================
-//                  LIHAT SAMPAH
-// ====================================================
+// ================================
+// LIHAT SAMPAH
+// ================================
 void lihatSampah() {
-    cout << "\n=== DAFTAR SAMPAH ===\n";
-
-    if (jumlahSampah == 0) {
-        cout << "Belum ada data sampah.\n";
+    if (!headSampah) {
+        cout << "Data kosong\n";
         return;
     }
 
-    for (int i = 0; i < jumlahSampah; i++) {
-        cout << i+1 << ". Kategori: " << dataSampah[i].kategori << endl;
-        cout << "   Jenis   : " << dataSampah[i].jenisSampah << endl;
-        cout << "   Berat   : " << dataSampah[i].berat << " kg\n";
-        cout << "   Harga/Kg: Rp " << dataSampah[i].hargaPerKg << "\n";
+    NodeSampah* temp = headSampah;
+    int i = 1;
+    while (temp) {
+        cout << i++ << ". " << temp->data.jenisSampah
+             << " | " << temp->data.kategori
+             << " | " << temp->data.berat << " kg"
+             << " | Rp" << temp->data.hargaPerKg << endl;
+        temp = temp->next;
     }
 }
 
-
-// ====================================================
-//                  EDIT SAMPAH
-// ====================================================
+// ================================
+// EDIT & HAPUS SAMPAH
+// ================================
 void editSampah() {
     lihatSampah();
+    int idx;
+    cout << "Pilih nomor: ";
+    cin >> idx;
 
-    if (jumlahSampah == 0)
-        return;
+    NodeSampah* temp = headSampah;
+    for (int i = 1; temp && i < idx; i++) temp = temp->next;
 
-    int index;
-    cout << "\nPilih nomor sampah yang ingin diedit: ";
-    cin >> index;
-
-    if (index < 1 || index > jumlahSampah) {
-        cout << "Nomor tidak valid.\n";
+    if (!temp) {
+        cout << "Tidak valid\n";
         return;
     }
 
-    cout << "\n=== EDIT DATA SAMPAH ===\n";
-    Sampah S = inputSampah();
-
-    dataSampah[index-1] = S;
-
-    cout << "Data sampah berhasil diperbarui!\n";
+    temp->data = inputSampah();
+    cout << "Data diperbarui\n";
 }
 
-
-// ====================================================
-//                  HAPUS SAMPAH
-// ====================================================
 void hapusSampah() {
     lihatSampah();
+    int idx;
+    cout << "Pilih nomor: ";
+    cin >> idx;
 
-    if (jumlahSampah == 0)
-        return;
-
-    int index;
-    cout << "\nMasukkan nomor sampah yang ingin dihapus: ";
-    cin >> index;
-
-    if (index < 1 || index > jumlahSampah) {
-        cout << "Nomor tidak valid.\n";
+    if (idx == 1) {
+        NodeSampah* del = headSampah;
+        headSampah = headSampah->next;
+        delete del;
         return;
     }
 
-    for (int i = index - 1; i < jumlahSampah - 1; i++) {
-        dataSampah[i] = dataSampah[i+1];
-    }
+    NodeSampah* prev = headSampah;
+    for (int i = 1; prev->next && i < idx - 1; i++)
+        prev = prev->next;
 
-    jumlahSampah--;
-    cout << "Data sampah berhasil dihapus!\n";
+    if (!prev->next) return;
+
+    NodeSampah* del = prev->next;
+    prev->next = del->next;
+    delete del;
 }
 
 
-// ====================================================
-//            TAMBAH TRANSAKSI (OTOMATIS HITUNG)
-// ====================================================
+
 void tambahTransaksi() {
-    if (jumlahTransaksi >= 50) {
-        cout << "Data transaksi penuh!\n";
+    if (!headSampah) {
+        cout << "Belum ada sampah\n";
         return;
     }
 
-    cout << "\n=== TAMBAH TRANSAKSI ===\n";
+    lihatSampah();
+    int idx;
+    cout << "Pilih sampah: ";
+    cin >> idx;
+
+    NodeSampah* parent = headSampah;
+    for (int i = 1; parent && i < idx; i++)
+        parent = parent->next;
+
+    if (!parent) {
+        cout << "Sampah tidak ditemukan\n";
+        return;
+    }
 
     Transaksi T;
-
-    cout << "Masukkan ID Transaksi: ";
+    cout << "ID Transaksi: ";
     cin >> T.idTransaksi;
-
-    cout << "Nama Nasabah: ";
     cin.ignore();
+    cout << "Nama Nasabah: ";
     getline(cin, T.namaNasabah);
 
-    Sampah S = inputSampah();
+    T.jenisSampah = parent->data.jenisSampah;
+    T.berat = parent->data.berat;
+    T.totalHarga = parent->data.berat * parent->data.hargaPerKg;
 
-    T.jenisSampah = S.jenisSampah;
-    T.berat = S.berat;
-    T.totalHarga = S.hargaPerKg * S.berat;
+    NodeTransaksi* n = new NodeTransaksi;
+    n->data = T;
+    n->next = nullptr;
 
-    dataTransaksi[jumlahTransaksi] = T;
-    jumlahTransaksi++;
+    // ===============================
+    // SIMPAN KE CHILD (RELASI)
+    // ===============================
+    if (!parent->firstChild)
+        parent->firstChild = n;
+    else {
+        NodeTransaksi* t = parent->firstChild;
+        while (t->next) t = t->next;
+        t->next = n;
+    }
 
-    cout << "Transaksi berhasil ditambahkan!\n";
+    // ===============================
+    // SIMPAN KE LIST GLOBAL (FIX)
+    // ===============================
+    if (!headTransaksi)
+        headTransaksi = n;
+    else {
+        NodeTransaksi* temp = headTransaksi;
+        while (temp->next) temp = temp->next;
+        temp->next = n;
+    }
+
+    cout << "Transaksi berhasil ditambahkan\n";
 }
 
-
-// ====================================================
-//                   LIHAT TRANSAKSI
-// ====================================================
 void lihatTransaksi() {
-    cout << "\n=== DAFTAR TRANSAKSI ===\n";
-
-    if (jumlahTransaksi == 0) {
-        cout << "Belum ada transaksi.\n";
+    if (!headTransaksi) {
+        cout << "Belum ada transaksi\n";
         return;
     }
 
-    for (int i = 0; i < jumlahTransaksi; i++) {
-        cout << i+1 << ". ID     : " << dataTransaksi[i].idTransaksi << endl;
-        cout << "   Nama   : " << dataTransaksi[i].namaNasabah << endl;
-        cout << "   Jenis  : " << dataTransaksi[i].jenisSampah << endl;
-        cout << "   Berat  : " << dataTransaksi[i].berat << " kg\n";
-        cout << "   Total  : Rp " << dataTransaksi[i].totalHarga << "\n";
+    cout << "\n==== DAFTAR TRANSAKSI ====\n";
+    NodeTransaksi* t = headTransaksi;
+
+    while (t) {
+        cout << "ID        : " << t->data.idTransaksi << endl;
+        cout << "Nasabah   : " << t->data.namaNasabah << endl;
+        cout << "Sampah    : " << t->data.jenisSampah << endl;
+        cout << "Total Rp  : " << t->data.totalHarga << endl;
+        cout << "--------------------------\n";
+        t = t->next;
     }
 }
+

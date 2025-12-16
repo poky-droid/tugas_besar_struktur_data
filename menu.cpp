@@ -230,6 +230,7 @@ string registerUser(){
 }
 
 
+
 void menuAdmin(){
     cout << "==========================" << endl;
     cout << "       MENU ADMIN        " << endl;
@@ -261,6 +262,8 @@ void menuAdmin(){
 }
 
 void menuPetugas(){
+    int pilihan;
+    do {
     cout << "==========================" << endl;
     cout << "      MENU PETUGAS       " << endl;
     cout << "==========================" << endl;
@@ -284,28 +287,36 @@ void menuPetugas(){
         default:
             cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
             break;
-    }
+        }
+     } while (pilihan != 3);
 }
 
+// ================================
+// TRANSAKSI (CHILD)
+// ================================
 void laporanTransaksi() {
     int pilih;
-
     do {
-        cout << "\n======== LAPORAN TRANSAKSI ========\n";
-        cout << "1. Tambah Transaksi\n";
-        cout << "2. Lihat Semua Transaksi\n";
+        cout << "\n==== LAPORAN TRANSAKSI ====\n";
+        cout << "1. Lihat Transaksi\n";
+        cout << "2. Tambah Transaksi\n";
         cout << "3. Kembali\n";
         cout << "Pilih menu: ";
         cin >> pilih;
 
         switch (pilih) {
-            case 1: tambahTransaksi(); break;
-            case 2: lihatTransaksi(); break;
-            case 3: break;
-            default: cout << "Pilihan tidak valid!\n";
+            case 1:
+                lihatTransaksi();
+                break;
+            case 2:
+                tambahTransaksi();
+                break;
+            case 3:
+                cout << "Kembali ke menu petugas...\n";
+                break;
+            default:
+                cout << "Pilihan tidak valid!\n";
         }
-
     } while (pilih != 3);
 }
-
 
