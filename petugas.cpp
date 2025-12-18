@@ -14,6 +14,9 @@ NodeSampah* createNodeSampah(Sampah S) {
     return n;
 }
 
+NodeTransaksi* headTransaksi = nullptr;
+NodeSampah* headSampah = nullptr;
+
 // ================================
 // KELOLA SAMPAH
 // ================================
@@ -200,4 +203,3 @@ void lihatTransaksi() {
         t = t->next;
     }
 }
-
